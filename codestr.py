@@ -151,7 +151,7 @@ if file_data:
 
         with col_btn_terapkan:
             if st.button("Terapkan"):
-                st.session_state.df_edit.at[idx, "kategori"] = kategori_final
+                st.session_state.df_edit.at[idx, "nama_kategori"] = kategori_final
                 st.success(f"Baris {idx} berhasil diupdate")
                 st.rerun()
 
