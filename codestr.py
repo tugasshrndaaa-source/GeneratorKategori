@@ -157,6 +157,18 @@ if file_data:
 
                 st.success("Kategori & parent berhasil diperbarui")
                 st.rerun()
+            # ===============================
+# HAPUS BARIS TERPILIH
+# ===============================
+        with col_btn_terapkan_hapus:  # atau bisa buat kolom baru jika mau terpisah
+            if st.button("Hapus Baris"):
+                if 0 <= idx < len(df):
+                    df.drop(idx, inplace=True)
+                    df.reset_index(drop=True, inplace=True)  # reset index setelah hapus
+                    st.session_state.df_edit = df
+                    st.success(f"Baris ke-{idx} berhasil dihapus")
+                    st.rerun()
+
 
         # ===============================
         # DOWNLOAD
@@ -172,3 +184,4 @@ if file_data:
 
 else:
     st.info("Upload file CSV produk untuk mulai")
+
