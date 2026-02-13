@@ -144,36 +144,33 @@ if file_data:
 
         st.info(f"Kategori final : {kategori_final}")
 
-        col_btn_terapkan, col_btn_download = st.columns(2)
+        # ===============================
+        # TOMBOL TERAPKAN, HAPUS, DOWNLOAD
+        # ===============================
+        col_terapkan, col_hapus, col_download = st.columns(3)
 
-        # ===============================
-        # TERAPKAN (UPDATE NAMA_KATEGORI + PARENT)
-        # ===============================
-        with col_btn_terapkan:
+        # Terapkan kategori
+        with col_terapkan:
             if st.button("Terapkan"):
                 df.at[idx, "nama_kategori"] = kategori_final
                 for lvl in level_cols:
                     df.at[idx, lvl] = selections.get(lvl, "")
-
+                st.session_state.df_edit = df
                 st.success("Kategori & parent berhasil diperbarui")
                 st.rerun()
-            # ===============================
-# HAPUS BARIS TERPILIH
-# ===============================
-        with col_btn_terapkan_hapus:  # atau bisa buat kolom baru jika mau terpisah
+
+        # Hapus baris
+        with col_hapus:
             if st.button("Hapus Baris"):
                 if 0 <= idx < len(df):
                     df.drop(idx, inplace=True)
-                    df.reset_index(drop=True, inplace=True)  # reset index setelah hapus
+                    df.reset_index(drop=True, inplace=True)
                     st.session_state.df_edit = df
                     st.success(f"Baris ke-{idx} berhasil dihapus")
                     st.rerun()
 
-
-        # ===============================
-        # DOWNLOAD
-        # ===============================
-        with col_btn_download:
+        # Download hasil
+        with col_download:
             csv = df.to_csv(index=False).encode("utf-8")
             st.download_button(
                 "Download Hasil",
@@ -184,4 +181,3 @@ if file_data:
 
 else:
     st.info("Upload file CSV produk untuk mulai")
-
